@@ -1,0 +1,27 @@
+{
+  "name": "finance-control-backend",
+  "version": "1.0.0",
+  "description": "Backend for Finance Control App built with Node.js, Express and Firebase",
+  "main": "src/app.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.3.0"
+  },
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "keywords": [
+    "finance",
+    "backend",
+    "nodejs",
+    "express",
+    "firebase"
+  ],
+  "author": "Carol",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

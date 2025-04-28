@@ -26,3 +26,16 @@ finance-control-backend/
 ├── .env
 ├── package.json
 └── README.md
+```
+## 📚 Current Features
+
+### 🔹 Transaction Routes
+- `GET /transactions` → List all transactions
+- `POST /transactions` → create a new transaction
+- `PUT /transactions/:id` → update a transaction by id
+- `DELETE /transactions/:id` → delete a transaction by id
+
+### 🔹 User Routes (Usuárias)
+- `GET /users` → list all users
+- `POST /users` → create a new user
+

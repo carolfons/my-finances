@@ -18,8 +18,15 @@ app.get('/', (req, res) => {
 
 // Importing routes
 const pingRoutes = require('./routes/ping.routes');
+const transactionRoutes = require('./routes/transaction.routes'); //importing transaction routes
+const userRoutes = require('./routes/user.routes'); //importing user routes
+
 // Using routes
 app.use('/ping', pingRoutes);
+app.use('/transactions', transactionRoutes); //using transaction routes
+app.use('/api', userRoutes); //using user routes
+
+
 // Default route for the API root
 app.get('/', (req, res) => {
     res.send('Finance Control Backend is running!');

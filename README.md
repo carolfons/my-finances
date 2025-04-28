@@ -26,3 +26,24 @@ finance-control-backend/
 ├── .env
 ├── package.json
 └── README.md
+
+```
+
+
+## 📚 Current Features
+
+### 🔹 Transaction Routes
+- `GET /transactions` → List all transactions
+- `POST /transactions` → create a new transaction
+- `PUT /transactions/:id` → update a transaction by id
+- `DELETE /transactions/:id` → delete a transaction by id
+
+### 🔹 User Routes (Usuárias)
+- `GET /users` → list all users
+- `POST /users` → create a new user
+
+## 🎯 Next Steps (Sprint 4):
+integrate Firebase to store transactions persistently (instead of in memory).
+Implement input validations (e.g., transaction values cannot be negative).
+Add unit tests.
+

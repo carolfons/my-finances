@@ -40,7 +40,8 @@ finance-control-backend/
 - `POST /users` → create a new user
 
 ## 🎯 Next Steps (Sprint 4):
-integrate Firebase to store transactions persistently (instead of in memory).
-Implement input validations (e.g., transaction values cannot be negative).
-Add unit tests.
+- integrate Firebase to store transactions persistently (instead of in memory).
+- Implement input validations (e.g., transaction values cannot be negative).
+- Add unit tests.
+- arrumar o readme do projeto
 

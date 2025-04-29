@@ -1,17 +1,27 @@
-// Mock data for transactions (temporary)
+const { db } = require('../firebase');
 
-let transactions =[
-    {id: 1,
-    description: 'Coffee',
-    amount: 5.0,
-    date: '2025-04-28',},
-    { id: 2, description: 'Lunch', amount: 15.0, date: '2025-04-28' }
-
-]
 
 //GET all transactions
-const getAllTransactions = (req, res) => {
-    res.status(200).json(transactions);
+
+async function getAllTransactions(req,res){
+    try{
+        //access the firebase database
+        const transactionsRef = db.ref('transactions');
+        //search for all transactions
+        const snapshot = await transactionsRef.get();
+        //create an array to store the transactions
+        const transactions = [];
+        //loop through the snapshot and add each transaction to the array
+        snapshot.forEach((doc)=>{
+            transactions.push({id: doc.id, ...doc.data()});
+        });
+
+        //return the transactions
+        res.status(200).json(transactions);
+    }catch(error){
+        console.error('Error getting transactions:', error);
+        res.status(500).json({message: 'Internal server error'});
+    }
 }
 
 //POST a new transaction

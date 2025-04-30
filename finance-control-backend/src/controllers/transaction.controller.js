@@ -1,4 +1,6 @@
+const { parse } = require("dotenv");
 const { db } = require("../firebase");
+const {createTransactionSchema, updateTransactionSchema} = require("../schemas/transaction.schemas");
 
 //GET all transactions
 
@@ -25,10 +27,14 @@ async function getAllTransactions(req, res) {
 //POST a new transaction
 async function createTransaction(req, res) {
   try {
-    const { title, value, type } = req.body;
-    if (!title || !value || !type) {
-      return res.status(400).json({ message: "Missing required fields" });
+
+    //validate the request body
+    const parsed = createTransactionSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ message: parsed.error.message });
     }
+
+    const { title, value, type } = parsed.data;
 
     const newTransaction = {
       title,
@@ -51,13 +57,22 @@ async function updateTransaction(req, res) {
     const { id } = req.params;
     const updates = req.body;
 
+    //validate the request body
+    const parsed = updateTransactionSchema.safeParse(req.body);
+    //check if the request body is valid
+    if (!parsed.success) {
+      return res.status(400).json({ message: parsed.error.message });
+    }
+
+
     const docRef = db.collection("transactions").doc(id);
     const docSnapshot = await docRef.get();
+
     if (!docSnapshot.exists) {
       return res.status(404).json({ message: "Transaction not found" });
     }
 
-    await docRef.update(updates);
+    await docRef.update(parsed.data);
     res.status(200).json({ message: "Transaction updated successfully" });
 
 

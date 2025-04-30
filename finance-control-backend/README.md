@@ -44,4 +44,5 @@ finance-control-backend/
 - Implement input validations (e.g., transaction values cannot be negative).
 - Add unit tests.
 - arrumar o readme do projeto
+- change the firestore json to .env file
 

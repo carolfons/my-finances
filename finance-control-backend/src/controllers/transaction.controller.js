@@ -1,69 +1,93 @@
-const { db } = require('../firebase');
-
+const { db } = require("../firebase");
 
 //GET all transactions
 
-async function getAllTransactions(req,res){
-    try{
-        //access the firebase database
-        const transactionsRef = db.ref('transactions');
-        //search for all transactions
-        const snapshot = await transactionsRef.get();
-        //create an array to store the transactions
-        const transactions = [];
-        //loop through the snapshot and add each transaction to the array
-        snapshot.forEach((doc)=>{
-            transactions.push({id: doc.id, ...doc.data()});
-        });
+async function getAllTransactions(req, res) {
+  try {
+    //access the firebase database
+    const snapshot = await db.collection("transactions").get();
+    //search for all transactions
+    // const snapshot = await getDocs(transactionsCol);
+    //loop through the snapshot and add each transaction to the array
+    const transactions = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-        //return the transactions
-        res.status(200).json(transactions);
-    }catch(error){
-        console.error('Error getting transactions:', error);
-        res.status(500).json({message: 'Internal server error'});
-    }
+    //return the transactions
+    res.status(200).json(transactions);
+  } catch (error) {
+    console.error("Error getting transactions:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 //POST a new transaction
-function createTransaction(req, res) {
-    const {description, amount, date} = req.body;
+async function createTransaction(req, res) {
+  try {
+    const { title, value, type } = req.body;
+    if (!title || !value || !type) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const newTransaction = {
-        id: transactions.length + 1, // ?
-        description,
-        amount,
-        date
+      title,
+      value,
+      type,
+      date: new Date().toISOString(),
     };
-    transactions.push(newTransaction);
-    res.status(201).json(newTransaction);
+    
+    const docRef = await db.collection("transactions").add(newTransaction);
+    res.status(201).json({ id: docRef.id, ...newTransaction });
+  } catch (error) {
+    console.error("Error creating transaction:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 // UPDATE a transaction by ID
-function updateTransaction(req, res) {
-    const {id} = req.params;
-    const {description, amount, date} = req.body;
+async function updateTransaction(req, res) {
+  try{
+    const { id } = req.params;
+    const updates = req.body;
 
-    let transaction = transactions.find(t => t.id === parseInt(id)); //?
-    if (!transaction) return res.status(404).json({message: 'Transaction not found'});
+    const docRef = db.collection("transactions").doc(id);
+    const docSnapshot = await docRef.get();
+    if (!docSnapshot.exists) {
+      return res.status(404).json({ message: "Transaction not found" });
+    }
 
-    transaction.description = description || transaction.description;
-    transaction.amount = amount || transaction.amount;
-    transaction.date = date || transaction.date; 
-    res.status(200).json(transaction);
+    await docRef.update(updates);
+    res.status(200).json({ message: "Transaction updated successfully" });
+
+
+  }catch(error){
+    console.error("Error updating transaction:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 //DELETE a transaction by ID
-function deleteTransaction(req, res) {
-    const {id} = req.params;
-    const index = transactions.findIndex(t => t.id === parseInt(id));
-    if (index === -1) return res.status(404).json({message: 'Transaction not found'});
+async function deleteTransaction(req, res) {
+  try {
+    const { id } = req.params;
+    const docRef = db.collection("transactions").doc(id);
+    const docSnapshot = await docRef.get();
+    if (!docSnapshot.exists) {
+      return res.status(404).json({ message: "Transaction not found" });
+    }
+    await docRef.delete();
+    res.status(200).json({ message: "Transaction deleted successfully" });
 
-    transactions.splice(index, 1);
-    res.status(200).json({message: 'Transaction deleted successfully'});
+}catch(error){
+    console.error("Error deleting transaction:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 module.exports = {
-    getAllTransactions,
-    createTransaction,
-    updateTransaction,
-    deleteTransaction,
-}
+  getAllTransactions,
+  createTransaction,
+  updateTransaction,
+  deleteTransaction,
+};

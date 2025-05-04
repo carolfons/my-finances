@@ -54,8 +54,8 @@ async function createTransaction(req, res) {
 // UPDATE a transaction by ID
 async function updateTransaction(req, res) {
   try{
+    //get the id from the request params
     const { id } = req.params;
-    const updates = req.body;
 
     //validate the request body
     const parsed = updateTransactionSchema.safeParse(req.body);
@@ -65,15 +65,23 @@ async function updateTransaction(req, res) {
     }
 
 
+    //creates a new document with the id and the data from the request body
     const docRef = db.collection("transactions").doc(id);
+    //get the document from the database
     const docSnapshot = await docRef.get();
+  
 
+    //check if the document exists
     if (!docSnapshot.exists) {
       return res.status(404).json({ message: "Transaction not found" });
     }
 
+    //update the document
     await docRef.update(parsed.data);
-    res.status(200).json({ message: "Transaction updated successfully" });
+    ///get the updated document
+    const updatedTransaction = {id:docSnapshot.id, ...docSnapshot.data()};
+    //return the updated document
+    res.status(200).json(updatedTransaction);
 
 
   }catch(error){

@@ -53,14 +53,14 @@ finance-control-backend/
 - `Jest` → unit testing
 - `Supertest`→  http testing
 
-## 🔐Autheentication and Authorization
+### 🔐Authentication and Authorization
 The aplication includes a authentication and authorization system using JWT (Json Web Tokens).
 - `JWT` → used for authentication and authorization
 - `POST /login` → authenticate a user and return a JWT token
 - All transactions routes (`/transactions`) are now protected by middleware: a valid token is required in the header
 - Only authenticated users can perform operations
 
-## 🔑 JWT & Security
+### 🔑 JWT & Security
 - User passwords are hashed using the `bcryptjs`  before stored in Firebase.
 - The JWT Token includes the user's `id` and `email` 
 - The JWT secret Key is securely stored in the `.env` file.

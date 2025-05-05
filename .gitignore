@@ -134,3 +134,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Ignora o arquivo de credenciais do Firebase
+finance-control-2e49d-firebase-adminsdk-fbsvc-1567e77d87.json
+finance-control-2e49d-firebase-adminsdk-fbsvc-636257a8c3.json

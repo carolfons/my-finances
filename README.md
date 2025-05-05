@@ -7,7 +7,10 @@ It provides a basic **CRUD** API to manage financial transactions.
 
 - Node.js
 - Express
-- Firebase (as the database)
+- Firebase Firestore (as the database)
+- Zod (for input validation)
+- Jest (for testing)
+- Supertest (for API testing)
 - dotenv (for environment variables)
 - cors (for API access control)
 - nodemon (for development)
@@ -42,8 +45,19 @@ finance-control-backend/
 - `GET /users` → list all users
 - `POST /users` → create a new user
 
-## 🎯 Next Steps (Sprint 4):
-integrate Firebase to store transactions persistently (instead of in memory).
-Implement input validations (e.g., transaction values cannot be negative).
-Add unit tests.
+## 🔹 Input validation and Unit  Tests
+- `ZOD`→ Input validation
+- `Jest`→ Unit tests
+- `Supertest`→ API testing
+
+## 🎯 Next Steps:
+-   ~integrate Firebase to store transactions persistently (instead of in memory).~
+-   ~Implement input validations (using zod).~
+-   ~Add unit tests.~
+-   Add firebase variables in .env
+
+
+--- 
+
+MADE WITH ❤️ BY @CAROLFONS
 

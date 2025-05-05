@@ -49,9 +49,28 @@ finance-control-backend/
 - `POST /users` → create a new user
 
 ### 🔹 Validation and Testing
-- `Zod` → used for input validation
-- `Jest` → used for testing
-- `Supertest` -> used for http testing
+- `Zod` → input validation
+- `Jest` → unit testing
+- `Supertest`→  http testing
+
+## 🔐Autheentication and Authorization
+The aplication includes a authentication and authorization system using JWT (Json Web Tokens).
+- `JWT` → used for authentication and authorization
+- `POST /login` → authenticate a user and return a JWT token
+- All transactions routes (`/transactions`) are now protected by middleware: a valid token is required in the header
+- Only authenticated users can perform operations
+
+## 🔑 JWT & Security
+- User passwords are hashed using the `bcryptjs`  before stored in Firebase.
+- The JWT Token includes the user's `id` and `email` 
+- The JWT secret Key is securely stored in the `.env` file.
+```bash
+#.env
+SECRET_KEY=your_secret_key
+USER_EMAIL=your_user_email
+USER_PASSWORD=your_user_password
+```
+
 
 ## 🎯 Next Steps:
 -   ~integrate Firebase to store transactions persistently (instead of in memory).~
@@ -59,6 +78,11 @@ finance-control-backend/
 -   ~Add unit tests.~
 -   ~Add firebase variables in .env~
 
-- Authentication and Authorization using JWT
+- ~Authentication and Authorization using JWT~
 - Dashboard for financial analysis information
+- Frontend integration
+
+---
+
+dEVeloPed by: [@CarolFons](https://github.com/carolfons)
 

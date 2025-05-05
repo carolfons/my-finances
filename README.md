@@ -45,19 +45,8 @@ finance-control-backend/
 - `GET /users` → list all users
 - `POST /users` → create a new user
 
-## 🔹 Input validation and Unit  Tests
-- `ZOD`→ Input validation
-- `Jest`→ Unit tests
-- `Supertest`→ API testing
-
-## 🎯 Next Steps:
--   ~integrate Firebase to store transactions persistently (instead of in memory).~
--   ~Implement input validations (using zod).~
--   ~Add unit tests.~
--   Add firebase variables in .env
-
-
---- 
-
-MADE WITH ❤️ BY @CAROLFONS
+## 🎯 Next Steps (Sprint 4):
+integrate Firebase to store transactions persistently (instead of in memory).
+Implement input validations (e.g., transaction values cannot be negative).
+Add unit tests.
 

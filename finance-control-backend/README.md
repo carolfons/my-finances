@@ -22,10 +22,16 @@ finance-control-backend/
 ├── node_modules/
 ├── src/
 │   ├── app.js
+│   ├── firebase.js
 │   ├── routes/
 │   ├── controllers/
 │   ├── services/
+│   ├── middlewares/
+│   ├── schemas/
+│   ├── tests/
 │   └── config/
+     
+├── .gitignore
 ├── .env
 ├── package.json
 └── README.md
@@ -52,4 +58,7 @@ finance-control-backend/
 -   ~Implement input validations (using zod).~
 -   ~Add unit tests.~
 -   ~Add firebase variables in .env~
+
+- Authentication and Authorization using JWT
+- Dashboard for financial analysis information
 

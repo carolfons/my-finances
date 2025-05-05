@@ -1,21 +1,25 @@
+//imports
 const express = require('express');
 const router = express.Router();
+const authMiddleware = require('../middleware/authMiddleware');
+const validateSchema = require('../middleware/validateSchema');
 
-//importing schemas
+// schemas
 const {
     createTransactionSchema,
     updateTransactionSchema,
 } = require('../schemas/transaction.schemas');
-//importing middleware
-const validateSchema = require('../middleware/validateSchema');
 
-//importing controller
+//controllers
 const {
     getAllTransactions,
     createTransaction,
     updateTransaction,
     deleteTransaction,
 } = require('../controllers/transaction.controller');
+
+//authentication middleware
+router.use(authMiddleware);
 
 //defining routes
 router.get('/', getAllTransactions); //GET all transactions

@@ -20,11 +20,13 @@ app.get('/', (req, res) => {
 const pingRoutes = require('./routes/ping.routes');
 const transactionRoutes = require('./routes/transaction.routes'); //importing transaction routes
 const userRoutes = require('./routes/user.routes'); //importing user routes
+const authRoutes = require('./routes/auth.routes'); //importing auth routes
 
 // Using routes
 app.use('/ping', pingRoutes);
 app.use('/transactions', transactionRoutes); //using transaction routes
 app.use('/api', userRoutes); //using user routes
+app.use('/auth', authRoutes); //using auth routes
 
 
 // Default route for the API root

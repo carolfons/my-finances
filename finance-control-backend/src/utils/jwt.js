@@ -2,7 +2,10 @@
 const jwt = require('jsonwebtoken');
 
 //secret key
-const SECRET_KEY = process.env.SECRET_KEY|| "my-secret-key";
+if (!process.env.SECRET_KEY) {
+    throw new Error("SECRET_KEY is not defined in environment variables");
+  }
+const SECRET_KEY = process.env.SECRET_KEY;
 
 module.exports = {
     //generate token

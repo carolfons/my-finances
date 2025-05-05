@@ -9,7 +9,7 @@ const {
 
 //defining routes
 router.get('/users', getAllUsers); //GET all users
-router.post('/users', createUser); //POST a NEW user
+//router.post('/users', createUser); //POST a NEW user
 
 
 module.exports = router;

@@ -1,8 +1,23 @@
 const request = require("supertest"); //supertest import
 const app = require("../app"); //import express app
 
+const testUser = {
+  email:process.env.TEST_USER_EMAIL,
+  password:process.env.TEST_USER_PASSWORD,
+};
 
-describe("Transaction API", () => {
+let token;
+
+describe("Transaction API (JWT Protected", () => {
+
+  //beforeAll runs before all tests
+  beforeAll(async () => {
+    //login to get the token
+    const res = await request(app)
+    .post("/auth/login")
+    .send(testUser);
+    token = res.body.token;
+  });
 
 /**
      * Test: GET /transactions
@@ -10,7 +25,8 @@ describe("Transaction API", () => {
      */
   it("should return all transactions", async () => {
     const res = await request(app)
-    .get("/transactions");
+    .get("/transactions")
+    .set("Authorization", `Bearer ${token}`);
 
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true); //expeect the response body to be an array
@@ -31,6 +47,7 @@ describe("Transaction API", () => {
 
     const response = await request(app)
     .post("/transactions")
+    .set("Authorization", `Bearer ${token}`)
     .send(newTransaction);
 
     expect(response.statusCode).toBe(201); //expect the response status code to be 201
@@ -52,6 +69,7 @@ describe("Transaction API", () => {
 
     const response = await request(app)
     .post("/transactions")
+    .set("Authorization", `Bearer ${token}`)
     .send(incompleteTransaction);
 
     expect(response.statusCode).toBe(400);
@@ -70,12 +88,16 @@ describe("Transaction API", () => {
     };
 
     //creating a new transaction to test
-    const createResponse = await request(app).post("/transactions").send(newTransaction);
+    const createResponse = await request(app)
+    .post("/transactions")
+    .set("Authorization", `Bearer ${token}`)
+    .send(newTransaction);
     //getting the id of the new transaction
     const transactionId = createResponse.body.id;
     //updating the transaction
     const response = await request(app)
     .put(`/transactions/${transactionId}`)
+    .set("Authorization", `Bearer ${token}`)
     .send(newTransaction);
     
     
@@ -96,11 +118,13 @@ describe("Transaction API", () => {
       //creating a new transaction to test
       const createResponse = await request(app)
       .post("/transactions")
+      .set("Authorization", `Bearer ${token}`)
       .send(newTransaction);
 
       const transactionId = createResponse.body.id;
       const response = await request(app)
-      .delete(`/transactions/${transactionId}`);
+      .delete(`/transactions/${transactionId}`)
+      .set("Authorization", `Bearer ${token}`);
 
       expect(response.statusCode).toBe(200);
       expect(response.body.message).toBe("Transaction deleted successfully");

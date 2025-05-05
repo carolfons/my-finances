@@ -43,5 +43,5 @@ finance-control-backend/
 -   ~integrate Firebase to store transactions persistently (instead of in memory).~
 -   ~Implement input validations (using zod).~
 -   ~Add unit tests.~
--   Add firebase variables in .env
+-   ~Add firebase variables in .env~
 

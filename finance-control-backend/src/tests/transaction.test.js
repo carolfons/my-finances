@@ -43,6 +43,8 @@ describe("Transaction API (JWT Protected", () => {
       title: "Test Transaction",
       value: 1000,
       type: "income",
+      location: "Test Location",
+      category: "Test Category",
     };
 
     const response = await request(app)
@@ -85,6 +87,8 @@ describe("Transaction API (JWT Protected", () => {
       title: "Updated Transaction",
       value: 200,
       type: "income",
+      location: "Updated Location",
+      category: "Updated Category",
     };
 
     //creating a new transaction to test
@@ -114,6 +118,8 @@ describe("Transaction API (JWT Protected", () => {
         title: "To be Deleted",
         value: 200,
         type: "expense",
+        location: "Deleted Location",
+        category: "Deleted Category",
       };
       //creating a new transaction to test
       const createResponse = await request(app)

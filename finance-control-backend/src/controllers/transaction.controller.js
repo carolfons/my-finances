@@ -28,23 +28,27 @@ async function getAllTransactions(req, res) {
 async function createTransaction(req, res) {
   try {
 
-    //validate the request body
+    //validate the request body with zod
     const parsed = createTransactionSchema.safeParse(req.body);
     if (!parsed.success) {
       return res.status(400).json({ message: parsed.error.message });
     }
 
-    const { title, value, type } = parsed.data;
+    const { title, value, type, location, category } = parsed.data;
 
     const newTransaction = {
       title,
       value,
       type,
+      location,
+      category,
       date: new Date().toISOString(),
     };
-    
+    //save the transaction to the database
     const docRef = await db.collection("transactions").add(newTransaction);
+    //response
     res.status(201).json({ id: docRef.id, ...newTransaction });
+
   } catch (error) {
     console.error("Error creating transaction:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -79,7 +83,7 @@ async function updateTransaction(req, res) {
     //update the document
     await docRef.update(parsed.data);
     ///get the updated document
-    const updatedTransaction = {id:docSnapshot.id, ...docSnapshot.data()};
+    const updatedTransaction = {id:docSnapshot.id, ...parsed.data};
     //return the updated document
     res.status(200).json(updatedTransaction);
 
